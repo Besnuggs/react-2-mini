@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 // Components
 import EditToggle from './components/EditToggle';
 import ColorChanger from './components/ColorChanger';
@@ -8,27 +7,76 @@ import FamilyChanger from './components/FamilyChanger';
 import TextContainer from './components/TextContainer';
 
 class App extends Component {
-  // constructor
+  constructor(props){
+    super(props)
+    this.state = {
+      fontColor: 'black',
+      fontSize: '12px',
+      fontFamily: 'monospace',
+      allowEdit: true
+    }
+    this.updateColor = this.updateColor.bind(this);
+    this.updateSize = this.updateSize.bind(this);
+    this.updateFamily = this.updateFamily.bind(this);
+    this.updateEditStatus = this.updateEditStatus.bind(this);
+  }
 
-  // updateColor
+updateColor(value){
+  this.setState({
+    fontColor:value
+  })
+}
 
-  // updateSize
+updateSize(value){
+  this.setState({
+    fontSize: value
+  })
+}
 
-  // updateFamily
+updateFamily(value){
+    this.setState({
+      fontFamily: value
+    })
+  }
 
-  // updateEditStatus
+updateEditStatus(value){
+  if (value === 'true'){
+    this.setState({
+      allowEdit: true
+    })
+  } else {
+    this.setState ( {
+      allowEdit: false
+    })
+  }
+  }
 
   render() {
     return (
       <div>
         <div className="headerBar">
-          { /* Render EditToggle */ }
-          { /* Render ColorChanger */ }
-          { /* Render SizeChanger */ }
-          { /* Render FamilyChanger */ }
+          <EditToggle 
+          updateEditStatus={this.updateEditStatus}
+          />
+          <ColorChanger 
+          updateColor={this.updateColor}
+          editColor={this.state.allowEdit}/>
+          <SizeChanger
+          updateSize={this.updateSize}
+          editSize={this.state.allowEdit}
+          />
+          <FamilyChanger 
+          updateFamily={this.updateFamily}
+          editFamily={this.state.allowEdit}
+          />
         </div>
         <div className="textArea">
-          { /* Render TextContainer */ }
+          <TextContainer 
+          color={this.state.fontColor}
+          fontSize={this.state.fontSize}
+          family={this.state.fontFamily} 
+          editT={this.state.allowEdit}
+          />
         </div>
       </div>
     )
